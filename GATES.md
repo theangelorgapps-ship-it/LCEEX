@@ -1,18 +1,18 @@
 # Gates: KV freight services scroll hero
 
-OWNS: kv/**, scripts/**, GATES.md
+OWNS: index.html, email/**, scripts/**, GATES.md
 
-Scope: a single-file scroll-driven KV freight hero (kv/index.html) with scrubbed video, sticky scene, giant-letter band reveal, services strip, self-hosted fonts, verified structurally and visually.
+Scope: a single-file scroll-driven KV freight hero (index.html, served at the site root) with scrubbed video, sticky scene, giant-letter band reveal, services strip, self-hosted fonts, verified structurally and visually.
 
 - [x] G0: this ledger states outcomes that can fail
   CHECK: node /Users/charlesfinney/.agents/skills/unlazy/scripts/gate-lint.mjs GATES.md
   EXPECT: LINT OK
   EVIDENCE: automatic-evidence=v1; definition-sha256=fcf86d4af21fe8819851ea75e6a88cbb2efbcfc5aa9ea13f771156cdee60f411; exit=0; EXPECT=matched; output-sha256=0944152ab63307929cab0ace4315ccccf0f1a4d92dfa7fabc062b3c32bada118; output-bytes=403; shell=/bin/sh; cwd=/Users/charlesfinney/Downloads/goodnews-meeting-email; path=a6e48af35b72/16 entries
 
-- [x] G1: kv/index.html source implements the full spec contract (media URLs, embedded latin woff2 fonts, blend-mode layering, scroll-mapping constants, scrub-only video, recorder hook, valid inline JS)
-  CHECK: node scripts/verify-kv-hero.mjs kv/index.html
+- [x] G1: index.html source implements the full spec contract (media URLs, embedded latin woff2 fonts, blend-mode layering, scroll-mapping constants, scrub-only video, recorder hook, valid inline JS)
+  CHECK: node scripts/verify-kv-hero.mjs index.html
   EXPECT: kv hero source verification passed
-  EVIDENCE: automatic-evidence=v1; definition-sha256=d0069d51e460b5b52eddff457baa743fc547e682d150de864062128597917b98; exit=0; EXPECT=matched; output-sha256=623355d98516d2c41bbc181a076a789cffcedb9a3462dce7463f7462f1d1ba12; output-bytes=35; shell=/bin/sh; cwd=/Users/charlesfinney/Downloads/goodnews-meeting-email; path=a6e48af35b72/16 entries
+  EVIDENCE: automatic-evidence=v1; definition-sha256=3caf337be680323020876f77eaad5ccae3c56944a53e5eb4ff98854a6511337a; exit=0; EXPECT=matched; output-sha256=623355d98516d2c41bbc181a076a789cffcedb9a3462dce7463f7462f1d1ba12; output-bytes=35; shell=/bin/sh; cwd=/Users/charlesfinney/Downloads/goodnews-meeting-email; path=a6e48af35b72/16 entries
 
 - [x] G2: all three cloudfront media assets used by the page are reachable with the expected content types
   CHECK: node scripts/verify-kv-media.mjs
