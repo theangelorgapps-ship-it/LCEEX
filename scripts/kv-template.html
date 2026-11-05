@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KV — Freight Group</title>
+<link rel="icon" href="data:,">
+<style>
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(data:font/woff2;base64,%%ANTON%%) format('woff2');
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url(data:font/woff2;base64,%%ARCHIVO%%) format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(data:font/woff2;base64,%%JBM%%) format('woff2');
+}
+
+:root {
+  --u: min(calc(100vw / 1440), calc(100vh / 960));
+  --ink: #111;
+  --cobalt: #2f63ff;
+  --giant-grey: #e9e9e9;
+  --edge-px: 60vh;
+  --ph: 0;
+}
+html.phone { --u: min(calc(100vw / 430), 1.4px); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { background: #fff; overflow-x: clip; }
+body {
+  font-family: 'Archivo', sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.track { position: relative; background: #fff; }
+
+.nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(var(--u) * 24) calc(var(--u) * 26);
+}
+.logo {
+  font-weight: 600;
+  font-size: calc(var(--u) * 30);
+  letter-spacing: -.06em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-right { display: flex; align-items: center; gap: calc(var(--u) * 28); }
+.nav-link, .nav-pill {
+  font-weight: 500;
+  font-size: calc(var(--u) * 10);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-pill {
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  padding: calc(var(--u) * 9) calc(var(--u) * 16);
+}
+html.phone .nav-follow { display: none; }
+
+.scene {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100lvh;
+  overflow: hidden;
+  background: linear-gradient(#fff 0 var(--edge-px), #111 var(--edge-px) 100%);
+}
+
+.clip {
+  position: absolute;
+  z-index: 1;
+  display: block;
+  background: #fff;
+  pointer-events: none;
+}
+
+.giant {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  bottom: calc(100lvh - var(--edge-px));
+  font-family: 'Anton', sans-serif;
+  font-size: calc(var(--u) * 330);
+  line-height: .8;
+  color: var(--giant-grey);
+  white-space: nowrap;
+  mix-blend-mode: darken;
+  transform: translate3d(100vw, 0, 0);
+  will-change: transform;
+  pointer-events: none;
+}
+html.phone .giant { font-size: calc(var(--u) * 180); }
+
+.readout {
+  position: absolute;
+  z-index: 4;
+  left: calc(var(--u) * 26);
+  top: calc(var(--u) * 52);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: calc(var(--u) * 10.5);
+  letter-spacing: .08em;
+  color: var(--ink);
+  opacity: var(--ph);
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+html.phone .readout { left: 20px; top: 22px; font-size: 11px; }
+
+.band {
+  position: absolute;
+  z-index: 3;
+  left: 0; right: 0;
+  top: var(--edge-px);
+  bottom: 0;
+  background: var(--ink);
+  overflow: hidden;
+  opacity: var(--ph);
+}
+
+.strip {
+  position: absolute;
+  top: calc(var(--u) * 76);
+  left: 0;
+  width: max-content;
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--u) * 120);
+  color: #fff;
+  transform: translate3d(100vw, 0, 0);
+  will-change: transform;
+}
+html.phone .strip {
+  top: calc(var(--u) * 44);
+  gap: calc(var(--u) * 56);
+  padding-left: 22px;
+}
+
+.lead { display: flex; gap: calc(var(--u) * 64); flex: 0 0 auto; }
+html.phone .lead { flex-direction: column; gap: calc(var(--u) * 24); }
+
+.headline {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+  font-size: calc(var(--u) * 64);
+  line-height: .98;
+  white-space: nowrap;
+}
+html.phone .headline { font-size: calc(var(--u) * 46); white-space: normal; }
+.headline .cobalt { color: var(--cobalt); }
+
+.lead-copy {
+  width: calc(var(--u) * 250);
+  font-size: calc(var(--u) * 12);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, .62);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 14);
+  padding-top: calc(var(--u) * 6);
+}
+html.phone .lead-copy { width: calc(var(--u) * 300); font-size: calc(var(--u) * 13); }
+
+.card {
+  --s: -40%;
+  flex: 0 0 auto;
+  width: calc(var(--u) * 270);
+  padding: 0 calc(var(--u) * 30);
+  border-left: 1px solid rgba(255, 255, 255, .12);
+}
+.card:first-of-type { border-left: none; }
+html.phone .card { width: calc(var(--u) * 250); }
+
+.card .icon { width: calc(var(--u) * 38); height: calc(var(--u) * 38); color: #fff; }
+
+.card-title {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+  font-size: calc(var(--u) * 26);
+  line-height: 1.02;
+  text-transform: uppercase;
+  margin: calc(var(--u) * 16) 0 calc(var(--u) * 10);
+}
+.card-body { font-size: calc(var(--u) * 12.4); line-height: 1.5; }
+html.phone .card-body { font-size: calc(var(--u) * 13); }
+
+.sweep {
+  background-image: linear-gradient(90deg,
+    #fff calc(var(--s, -40%) - 34%),
+    var(--cobalt) calc(var(--s, -40%) - 6%),
+    transparent calc(var(--s, -40%) + 26%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.band-pill {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--u) * 36);
+  transform: translateX(-50%) translateY(calc((1 - var(--ph)) * 24px));
+  opacity: var(--ph);
+  transition: opacity .5s ease, transform .5s ease;
+  font-weight: 500;
+  font-size: calc(var(--u) * 10);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, .45);
+  border-radius: 999px;
+  padding: calc(var(--u) * 9) calc(var(--u) * 16);
+  white-space: nowrap;
+}
+</style>
+</head>
+<body>
+<div class="track">
+  <nav class="nav">
+    <a class="logo" href="#">KV</a>
+    <div class="nav-right">
+      <a class="nav-link" href="#">&rarr; Menu</a>
+      <a class="nav-link nav-follow" href="#">Follow</a>
+      <a class="nav-pill" href="#">Work with us</a>
+    </div>
+  </nav>
+  <section class="scene">
+    <video class="clip" muted playsinline preload="auto" disablepictureinpicture role="img"
+      aria-label="A reach stacker lifts a navy container and loads it onto a semi-truck"
+      poster="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/2307e4bf-be39-42b4-b579-e168aeccabf0.jpg"></video>
+    <div class="giant" aria-hidden="true">OUR SERVICES</div>
+    <div class="readout" aria-hidden="true">00 KM/H</div>
+    <div class="band">
+      <div class="strip">
+        <div class="lead">
+          <h2 class="headline">EVERYTHING YOUR<br>FREIGHT NEEDS.<br><span class="cobalt">UNDER ONE GROUP.</span></h2>
+          <div class="lead-copy">
+            <p>From air to sea, from customs clearance to the last mile, we bring decades of practice to every freight discipline.</p>
+            <p>One integrated network means one partner, one point of contact and full visibility from origin to destination.</p>
+          </div>
+        </div>
+        <article class="card" aria-label="Air freight">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2.5 11 13"/><path d="M21.5 2.5 15 21.5l-4-8.5-8.5-4 19-6.5Z"/></svg>
+          <h3 class="card-title sweep">Air<br>freight</h3>
+          <p class="card-body sweep">Express, priority and deferred options across global lanes, booked and tracked end to end.</p>
+        </article>
+        <article class="card" aria-label="Ocean freight">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 15.5h18l-2.3 5H5.3L3 15.5Z"/><path d="M6.5 11.5h11v4h-11z"/><path d="M9.5 7.5h5v4h-5z"/></svg>
+          <h3 class="card-title sweep">Ocean<br>freight</h3>
+          <p class="card-body sweep">FCL and LCL sailings on every major trade lane, with carrier choice based on cost and transit time.</p>
+        </article>
+        <article class="card" aria-label="Customs brokerage">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2.5h7.5L19 8v13.5H6V2.5Z"/><path d="M13.5 2.5V8H19"/><path d="m9 14 2.2 2.2L15.5 11.7"/></svg>
+          <h3 class="card-title sweep">Customs<br>brokerage</h3>
+          <p class="card-body sweep">Licensed in-house brokers for classification, duties and inspections, so goods clear first time.</p>
+        </article>
+        <article class="card" aria-label="Warehousing and 3PL">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 20V9.2L12 3.5l9.2 5.7V20"/><path d="M6.2 20v-7.5h11.6V20"/><path d="M6.2 15h11.6M6.2 17.5h11.6"/></svg>
+          <h3 class="card-title sweep">Warehousing<br>and 3PL</h3>
+          <p class="card-body sweep">Bonded and general storage, pick and pack, and distribution that plugs straight into transport.</p>
+        </article>
+        <article class="card" aria-label="Project cargo">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5V6"/><path d="M12 6a3 3 0 0 1 3 3c0 1.8-1.4 3-3 3s-3-1.2-3-3"/><path d="M12 12v2"/><path d="M6 15.5h12l2 6H4l2-6Z"/></svg>
+          <h3 class="card-title sweep">Project<br>cargo</h3>
+          <p class="card-body sweep">Oversized and heavy-lift moves, engineered, permitted and escorted from factory to foundation.</p>
+        </article>
+      </div>
+      <div class="band-pill">Our services</div>
+    </div>
+  </section>
+</div>
+<script>
+(() => {
+  'use strict';
+  const U1080 = 'https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/409763c0-95f4-49d3-a601-dc564d55072b.mp4';
+  const U720 = 'https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/b3718419-7a0a-478d-bfb0-0ff8bef7f3f7.mp4';
+  const A = 2.4;
+  const FALLBACK_DUR = 4.04;
+
+  const track = document.querySelector('.track');
+  const scene = document.querySelector('.scene');
+  const video = document.querySelector('.clip');
+  const giant = document.querySelector('.giant');
+  const strip = document.querySelector('.strip');
+  const readout = document.querySelector('.readout');
+  const cards = Array.from(document.querySelectorAll('.card'));
+
+  let vw = 0, vh = 0, B = 3, stripW = 0, lettersW = 0;
+  let dur = FALLBACK_DUR;
+  let cur = 0;
+  let smooth = 0, lastY = 0, lastT = performance.now();
+  let ph = '';
+
+  const clamp01 = v => Math.min(1, Math.max(0, v));
+  const phone = () => vw < 768 || vw <= vh;
+
+  function setSrc() {
+    const want = vw <= 900 ? U720 : U1080;
+    if (video.dataset.src === want) return;
+    const ratio = dur > 0 ? cur / dur : 0;
+    video.dataset.src = want;
+    video.src = want;
+    video.load();
+    video.addEventListener('loadedmetadata', () => {
+      dur = video.duration || FALLBACK_DUR;
+      cur = Math.min(ratio * dur, dur - 1 / 48);
+      video.currentTime = cur;
+    }, { once: true });
+  }
+
+  function layout() {
+    vw = window.innerWidth; vh = window.innerHeight;
+    document.documentElement.classList.toggle('phone', phone());
+    let w, h, left, top;
+    if (phone()) {
+      w = vw * 1.55;
+      h = w * 9 / 16;
+      left = 0.5 * vw - 0.40 * w;
+      top = 0.36 * vh - 0.448 * h;
+    } else {
+      const s = Math.max(vw / 1920, vh / 1080);
+      w = 1920 * s; h = 1080 * s;
+      left = (vw - w) / 2;
+      top = (vh - h) / 2;
+    }
+    video.style.width = w + 'px';
+    video.style.height = h + 'px';
+    video.style.left = left + 'px';
+    video.style.top = top + 'px';
+    scene.style.setProperty('--edge-px', (top + 0.448 * h) + 'px');
+    stripW = strip.scrollWidth;
+    lettersW = giant.scrollWidth;
+    B = (stripW + 0.45 * vw) / vw * 1.1;
+    track.style.height = ((1 + A + B) * vh) + 'px';
+    setSrc();
+  }
+
+  video.addEventListener('loadedmetadata', () => { dur = video.duration || FALLBACK_DUR; });
+  video.addEventListener('seeked', () => {
+    if (!video.seeking && Math.abs(cur - video.currentTime) > 1 / 60) video.currentTime = cur;
+  });
+
+  const recMode = new URLSearchParams(location.search).get('rec') === '1';
+  let recAnim = null, recDriver = null;
+  if (recMode) {
+    recDriver = document.createElement('div');
+    recDriver.style.cssText = 'position:fixed;left:-10px;top:-10px;width:1px;height:1px;pointer-events:none';
+    document.body.appendChild(recDriver);
+    recAnim = recDriver.animate([
+      { transform: 'translateX(0px)', offset: 0 },
+      { transform: 'translateX(0px)', offset: 0.04, easing: 'cubic-bezier(.4,.05,.55,.95)' },
+      { transform: 'translateX(10000px)', offset: 0.96 },
+      { transform: 'translateX(10000px)', offset: 1 }
+    ], { duration: 11000, fill: 'both' });
+    recAnim.pause();
+  }
+  function recProgress(t) {
+    recAnim.currentTime = t;
+    const m = new DOMMatrixReadOnly(getComputedStyle(recDriver).transform);
+    return clamp01(m.m41 / 10000);
+  }
+  window.__recTime = function (vid, t) {
+    const maxY = (A + B) * vh;
+    const y = recProgress(t) * maxY;
+    window.scrollTo(0, y);
+    const q = clamp01(y / (A * vh));
+    cur = q * (dur - 1 / 48);
+    vid.currentTime = cur;
+    const step = 1000 / 60;
+    const yPrev = recProgress(Math.max(0, t - step)) * maxY;
+    const sp = Math.min(99, Math.abs(y - yPrev) / (step / 1000) / 32);
+    readout.textContent = String(Math.round(sp)).padStart(2, '0') + ' KM/H';
+    return cur;
+  };
+
+  function frame(now) {
+    const y = window.scrollY || 0;
+    const q = clamp01(y / (A * vh));
+    if (!recMode) {
+      const target = q * (dur - 1 / 48);
+      cur += (target - cur) * 0.2;
+      if (!video.seeking && Math.abs(cur - video.currentTime) > 1 / 60) video.currentTime = cur;
+      const dt = Math.max(1, now - lastT);
+      const raw = Math.min(99, Math.abs(y - lastY) / (dt / 1000) / 32);
+      smooth += (raw - smooth) * 0.2;
+      readout.textContent = String(Math.round(smooth)).padStart(2, '0') + ' KM/H';
+    }
+    lastY = y; lastT = now;
+
+    const nextPh = q >= 0.94 ? '1' : '0';
+    if (nextPh !== ph) { ph = nextPh; scene.style.setProperty('--ph', ph); }
+
+    const r = clamp01((y - A * vh) / (B * vh));
+    const sx = vw - r * (stripW + 0.45 * vw);
+    strip.style.transform = 'translate3d(' + sx + 'px,0,0)';
+    const gx = vw - r * (lettersW + vw);
+    giant.style.transform = 'translate3d(' + gx + 'px,0,0)';
+    for (let i = 0; i < cards.length; i++) {
+      const c = cards[i];
+      const s = Math.min(1.6, Math.max(-0.4, (0.98 - (sx + c.offsetLeft) / vw) / 0.3)) * 100;
+      c.style.setProperty('--s', s + '%');
+    }
+    requestAnimationFrame(frame);
+  }
+
+  layout();
+  window.addEventListener('resize', layout);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', layout);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
